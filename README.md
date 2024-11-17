@@ -117,6 +117,5 @@ __Libraries Used__
 * __Celery__: Task queue for email scheduling and throttling.
 * __Redis__: Message broker for Celery.
 * __SendGrid__: ESP for email delivery and tracking.
-* __OpenAI API__: LLM for content generation.
-__Database__
-* SQLite is used to store email statuses and scheduling data.
+* __OpenAI API__: LLM for content generation.\
+* __Database__: SQLite is used to store email statuses and scheduling data.
