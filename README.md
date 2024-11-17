@@ -120,4 +120,3 @@ __Libraries Used__
 * __OpenAI API__: LLM for content generation.
 __Database__
 * SQLite is used to store email statuses and scheduling data.
-# custom-email-sender-with-openai
