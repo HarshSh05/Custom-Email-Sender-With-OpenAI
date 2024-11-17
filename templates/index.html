@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Email Sender</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Custom Email Sender</h1>
+        <p>Upload recipient data and customize your email template.</p>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Upload Form -->
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="sheet_url">Google Sheets URL:</label>
+            <input type="url" id="sheet_url" name="sheet_url" placeholder="Enter Google Sheets URL">
+
+            <p>OR</p>
+
+            <label for="file">Upload CSV File:</label>
+            <input type="file" id="file" name="file" accept=".csv">
+
+            <label for="email_template">Email Template:</label>
+            <textarea id="email_template" name="email_template" rows="6" placeholder="Hi {Company Name}, welcome to {Location}!"></textarea>
+
+            <button type="submit">Upload and Send Emails</button>
+        </form>
+
+        <!-- Real-Time Metrics Section -->
+        <div class="metrics">
+            <h2>Email Campaign Metrics</h2>
+            <ul>
+                <li>Total Emails Sent: <span id="total_sent">0</span></li>
+                <li>Delivered Emails: <span id="delivered">0</span></li>
+                <li>Opened Emails: <span id="opened">0</span></li>
+                <li>Bounced Emails: <span id="bounced">0</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch and update metrics
+        async function fetchMetrics() {
+            try {
+                const response = await fetch('/metrics');
+                const data = await response.json();
+
+                document.getElementById('total_sent').textContent = data.total_sent;
+                document.getElementById('delivered').textContent = data.delivered;
+                document.getElementById('opened').textContent = data.opened;
+                document.getElementById('bounced').textContent = data.bounced;
+            } catch (error) {
+                console.error('Error fetching metrics:', error);
+            }
+        }
+
+        // Refresh metrics every 5 seconds
+        setInterval(fetchMetrics, 5000);
+        fetchMetrics(); // Initial fetch
+    </script>
+</body>
+</html>
