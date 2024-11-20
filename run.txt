@@ -1,4 +1,0 @@
-cd /Users/harshshivankar/Documents/custom-email-sender
-source venv/bin/activate
-
-deactivate (after finish using environment)
